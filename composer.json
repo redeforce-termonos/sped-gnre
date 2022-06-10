@@ -15,8 +15,9 @@
         "laminas/laminas-barcode": "^2.3",
         "smarty/smarty": "~3.1",
         "nfephp-org/sped-nfe": "5.1.*",
-        "ext-gd": "*",
-        "ext-dom": "*"
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-gd": "*"
     },
     "scripts": {
         "test": "phpunit"

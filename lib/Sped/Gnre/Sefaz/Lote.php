@@ -17,21 +17,21 @@
 
 namespace Sped\Gnre\Sefaz;
 
-use Sped\Gnre\Sefaz\LoteGnre;
 use Sped\Gnre\Sefaz\EstadoFactory;
+use Sped\Gnre\Sefaz\LoteGnre;
 
 /**
  * Classe que armazena uma ou mais Guias (\Sped\Gnre\Sefaz\Guia) para serem
  * transmitidas. Não é possível transmitir uma simples guia em um formato unitário, para que seja transmitida
  * com sucesso a guia deve estar dentro de um lote (\Sped\Gnre\Sefaz\Lote).
+ *
  * @package     gnre
  * @subpackage  sefaz
  * @author      Matheus Marabesi <matheus.marabesi@gmail.com>
  * @license     http://www.gnu.org/licenses/gpl-howto.html GPL
  * @version     1.0.0
  */
-class Lote extends LoteGnre
-{
+class Lote extends LoteGnre {
 
     /**
      * @var \Sped\Gnre\Sefaz\EstadoFactory
@@ -46,8 +46,7 @@ class Lote extends LoteGnre
     /**
      * @return mixed
      */
-    public function getEstadoFactory()
-    {
+    public function getEstadoFactory() {
         if (null === $this->estadoFactory) {
             $this->estadoFactory = new EstadoFactory();
         }
@@ -57,34 +56,33 @@ class Lote extends LoteGnre
 
     /**
      * @param mixed $estadoFactory
+     *
      * @return Lote
      */
-    public function setEstadoFactory(EstadoFactory $estadoFactory)
-    {
+    public function setEstadoFactory(EstadoFactory $estadoFactory) {
         $this->estadoFactory = $estadoFactory;
+
         return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHeaderSoap()
-    {
+    public function getHeaderSoap() {
         $action = $this->ambienteDeTeste ?
             'http://www.testegnre.pe.gov.br/webservice/GnreRecepcaoLote' :
             'http://www.gnre.pe.gov.br/webservice/GnreRecepcaoLote';
 
-        return array(
+        return [
             'Content-Type: application/soap+xml;charset=utf-8;action="' . $action . '"',
-            'SOAPAction: processar'
-        );
+            'SOAPAction: processar',
+        ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function soapAction()
-    {
+    public function soapAction() {
         return $this->ambienteDeTeste ?
             'https://www.testegnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao' :
             'https://www.gnre.pe.gov.br/gnreWS/services/GnreLoteRecepcao';
@@ -93,8 +91,7 @@ class Lote extends LoteGnre
     /**
      * {@inheritdoc}
      */
-    public function toXml()
-    {
+    public function toXml() {
         $gnre = new \DOMDocument('1.0', 'UTF-8');
         $gnre->formatOutput = false;
         $gnre->preserveWhiteSpace = false;
@@ -247,8 +244,7 @@ class Lote extends LoteGnre
     /**
      * {@inheritdoc}
      */
-    public function getSoapEnvelop($gnre, $loteGnre)
-    {
+    public function getSoapEnvelop($gnre, $loteGnre) {
         $soapEnv = $gnre->createElement('soap12:Envelope');
         $soapEnv->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $soapEnv->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
@@ -282,8 +278,8 @@ class Lote extends LoteGnre
     /**
      * {@inheritdoc}
      */
-    public function utilizarAmbienteDeTeste($ambiente = false)
-    {
+    public function utilizarAmbienteDeTeste($ambiente = false) {
         $this->ambienteDeTeste = $ambiente;
     }
+
 }

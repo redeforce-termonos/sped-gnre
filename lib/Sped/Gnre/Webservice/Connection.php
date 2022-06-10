@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Este arquivo é parte do programa GNRE PHP
  * GNRE PHP é um software livre; você pode redistribuí-lo e/ou
@@ -23,23 +25,24 @@ use Sped\Gnre\Configuration\Setup;
  * Classe que realiza a conexão com o webservice da SEFAZ com a
  * configuração definida em alguma classe que implementa \Sped\Gnre\Configuration\Interfaces\Setup e
  * para o envido das informações é utilizado o curl
+ *
  * @package     gnre
  * @subpackage  webservice
  * @author      Matheus Marabesi <matheus.marabesi@gmail.com>
  * @license     http://www.gnu.org/licenses/gpl-howto.html GPL
  * @version     1.0.0
  */
-class Connection
-{
+class Connection {
 
     /**
      * Armazena todas as opções desejadas para serem incluídas no curl()
+     *
      * @var array
      */
-    private $curlOptions = array();
+    private $curlOptions = [];
 
     /**
-     * @var \Sped\Gnre\Configuration\Setup
+     * @var Setup
      */
     private $setup;
 
@@ -47,20 +50,20 @@ class Connection
      * Inicia os parâmetros com o curl para se comunicar com o  webservice da SEFAZ.
      * São setadas a URL de acesso o certificado que será usado e uma série de parâmetros
      * para a header do curl e caso seja usado proxy esse método o adiciona
-     * @param  \Sped\Gnre\Configuration\Interfaces\Setup $setup
+     *
+     * @param Setup $setup
      * @param  $headers  array
      * @param  $data  string
+     *
      * @since  1.0.0
      */
-    public function __construct(Setup $setup, $headers, $data)
-    {
+    public function __construct(Setup $setup, $headers, $data) {
         $this->setup = $setup;
 
-        $this->curlOptions = array(
+        $this->curlOptions = [
             CURLOPT_PORT => 443,
-            CURLOPT_VERBOSE => 1,
             CURLOPT_HEADER => 1,
-            CURLOPT_SSLVERSION => 3,
+            CURLOPT_SSLVERSION => 6,
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_SSLCERT => $setup->getCertificatePemFile(),
@@ -70,7 +73,7 @@ class Connection
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_VERBOSE => $setup->getDebug(),
-        );
+        ];
 
         $ip = $setup->getProxyIp();
         $port = $setup->getProxyPort();
@@ -84,10 +87,10 @@ class Connection
 
     /**
      * Retorna as opções definidas para o curl
+     *
      * @return array
      */
-    public function getCurlOptions()
-    {
+    public function getCurlOptions() {
         return $this->curlOptions;
     }
 
@@ -113,10 +116,10 @@ class Connection
      * </pre>
      *
      * @param array $option
+     *
      * @return \Sped\Gnre\Webservice\Connection
      */
-    public function addCurlOption(array $option)
-    {
+    public function addCurlOption(array $option) {
         foreach ($option as $key => $value) {
             $this->curlOptions[$key] = $value;
         }
@@ -126,30 +129,29 @@ class Connection
 
     /**
      * Realiza a requisição ao webservice desejado através do curl() do php
-     * @param  string  $url  String com a URL que será enviada a requisição
+     *
+     * @param string $url String com a URL que será enviada a requisição
+     *
+     * @return string Caso a requisição não seja feita com sucesso false, caso contrário um XML formatado
      * @since  1.0.0
-     * @return string|boolean Caso a requisição não seja feita com sucesso false, caso contrário um XML formatado
      */
-    public function doRequest($url)
-    {
+    public function doRequest($url) {
         $curl = curl_init($url);
         curl_setopt_array($curl, $this->curlOptions);
         $ret = curl_exec($curl);
 
-        $n = strlen($ret);
-        $x = stripos($ret, "<");
-        $xml = substr($ret, $x, $n - $x);
-
-        if ($this->setup->getDebug()) {
+        if (is_bool($ret)) {
             print_r(curl_getinfo($curl));
-        }
-
-        if ($xml === false || $xml === '') {
             $xml = curl_error($curl);
+        } else {
+            $n = strlen($ret);
+            $x = stripos($ret, '<');
+            $xml = substr($ret, $x, $n - $x);
         }
 
         curl_close($curl);
 
         return $xml;
     }
+
 }
