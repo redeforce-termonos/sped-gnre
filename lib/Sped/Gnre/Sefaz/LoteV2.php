@@ -93,7 +93,9 @@ class LoteV2 extends Lote {
 
             $ufFavorecida = $gnre->createElement('ufFavorecida', $estado);
             $tipoGnre = $gnre->createElement('tipoGnre', '0');
-            $valorGNRE = $gnre->createElement('valorGNRE', $gnreGuia->c10_valorTotal);
+            $valorGNRE = $gnre->createElement(
+                'valorGNRE', number_format($gnreGuia->c10_valorTotal, 2, '.', '')
+            );
             $dataPagamento = $gnre->createElement('dataPagamento', $gnreGuia->c33_dataPagamento);
             $identificadorGuia = $gnre->createElement('identificadorGuia', '1');
 
@@ -147,11 +149,15 @@ class LoteV2 extends Lote {
                 $referencia->appendChild($parcela);
             }
             $dataVencimento = $gnre->createElement('dataVencimento', $gnreGuia->c14_dataVencimento);
-            $valor11 = $gnre->createElement('valor', $gnreGuia->c06_valorPrincipal);
+            $valor11 = $gnre->createElement(
+                'valor', number_format($gnreGuia->c06_valorPrincipal, 2, '.', '')
+            );
             $tipo11 = $gnre->createAttribute('tipo');
             $tipo11->value = '11';
             $valor11->appendChild($tipo11);
-            $valor21 = $gnre->createElement('valor', $gnreGuia->c06_valorPrincipal);
+            $valor21 = $gnre->createElement(
+                'valor', number_format($gnreGuia->c06_valorPrincipal, 2, '.', '')
+            );
             $tipo21 = $gnre->createAttribute('tipo');
             $tipo21->value = '21';
             $valor21->appendChild($tipo21);
