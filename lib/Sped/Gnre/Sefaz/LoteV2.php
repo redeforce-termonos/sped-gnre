@@ -25,16 +25,16 @@ class LoteV2 extends Lote {
 
     /**
      * @param bool $ambienteDeTesteV2
+     *
      * @return LoteV2
      */
-    public function setAmbienteDeTesteV2(bool $ambienteDeTesteV2): LoteV2
-    {
+    public function setAmbienteDeTesteV2(bool $ambienteDeTesteV2): LoteV2 {
         $this->ambienteDeTesteV2 = $ambienteDeTesteV2;
+
         return $this;
     }
 
-    public function getSoapEnvelop($gnre, $loteGnre)
-    {
+    public function getSoapEnvelop($gnre, $loteGnre) {
         $soapEnv = $gnre->createElement('soap12:Envelope');
         $soapEnv->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $soapEnv->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
@@ -94,7 +94,7 @@ class LoteV2 extends Lote {
             $ufFavorecida = $gnre->createElement('ufFavorecida', $estado);
             $tipoGnre = $gnre->createElement('tipoGnre', '0');
             $valorGNRE = $gnre->createElement(
-                'valorGNRE', number_format($gnreGuia->c10_valorTotal, 2, '.', '')
+                'valorGNRE', number_format($gnreGuia->gnreValue, 2, '.', '')
             );
             $dataPagamento = $gnre->createElement('dataPagamento', $gnreGuia->c33_dataPagamento);
             $identificadorGuia = $gnre->createElement('identificadorGuia', '1');
@@ -134,33 +134,109 @@ class LoteV2 extends Lote {
             $tipoDoc->value = $gnreGuia->c28_tipoDocOrigem;
             $documentoOrigem->appendChild($tipoDoc);
             $referencia = $gnre->createElement('referencia');
-            $periodo =  $gnre->createElement('periodo', '0');
+            $periodo = $gnre->createElement('periodo', '0');
             $referencia->appendChild($periodo);
-            if ($gnreGuia->mes!=null) {
-                $mes =  $gnre->createElement('mes', $gnreGuia->mes);
+            if ($gnreGuia->mes != null) {
+                $mes = $gnre->createElement('mes', $gnreGuia->mes);
                 $referencia->appendChild($mes);
             }
-            if ($gnreGuia->ano!=null) {
-                $ano =  $gnre->createElement('ano', $gnreGuia->ano);
+            if ($gnreGuia->ano != null) {
+                $ano = $gnre->createElement('ano', $gnreGuia->ano);
                 $referencia->appendChild($ano);
             }
-            if ($gnreGuia->parcela!=null) {
-                $parcela =  $gnre->createElement('parcela', $gnreGuia->parcela);
+            if ($gnreGuia->parcela != null) {
+                $parcela = $gnre->createElement('parcela', $gnreGuia->parcela);
                 $referencia->appendChild($parcela);
             }
             $dataVencimento = $gnre->createElement('dataVencimento', $gnreGuia->c14_dataVencimento);
-            $valor11 = $gnre->createElement(
-                'valor', number_format($gnreGuia->c06_valorPrincipal, 2, '.', '')
-            );
-            $tipo11 = $gnre->createAttribute('tipo');
-            $tipo11->value = '11';
-            $valor11->appendChild($tipo11);
-            $valor21 = $gnre->createElement(
-                'valor', number_format($gnreGuia->c06_valorPrincipal, 2, '.', '')
-            );
-            $tipo21 = $gnre->createAttribute('tipo');
-            $tipo21->value = '21';
-            $valor21->appendChild($tipo21);
+
+            if (!empty($gnreGuia->mainValueICMS)) {
+                $valor11 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->mainValueICMS, 2, '.', '')
+                );
+                $tipo11 = $gnre->createAttribute('tipo');
+                $tipo11->value = '11';
+                $valor11->appendChild($tipo11);
+            }
+
+            if (!empty($gnreGuia->totalValueICMS)) {
+                $valor21 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->totalValueICMS, 2, '.', '')
+                );
+                $tipo21 = $gnre->createAttribute('tipo');
+                $tipo21->value = '21';
+                $valor21->appendChild($tipo21);
+            }
+
+            if (!empty($gnreGuia->fineValueICMS)) {
+                $valor31 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->fineValueICMS, 2, '.', '')
+                );
+                $tipo31 = $gnre->createAttribute('tipo');
+                $tipo31->value = '31';
+                $valor31->appendChild($tipo31);
+            }
+
+            if (!empty($gnreGuia->feesValueICMS)) {
+                $valor41 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->feesValueICMS, 2, '.', '')
+                );
+                $tipo41 = $gnre->createAttribute('tipo');
+                $tipo41->value = '41';
+                $valor41->appendChild($tipo41);
+            }
+
+            if (!empty($gnreGuia->restatementValueICMS)) {
+                $valor51 = $gnre->createElement('valor', number_format($gnreGuia->restatementValueICMS, 2, '.', '')
+                );
+                $tipo51 = $gnre->createAttribute('tipo');
+                $tipo51->value = '51';
+                $valor51->appendChild($tipo51);
+            }
+
+            if (!empty($gnreGuia->mainValueFP)) {
+                $valor12 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->mainValueFP, 2, '.', '')
+                );
+                $tipo12 = $gnre->createAttribute('tipo');
+                $tipo12->value = '12';
+                $valor12->appendChild($tipo12);
+            }
+
+            if (!empty($gnreGuia->totalValueFP)) {
+                $valor22 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->totalValueFP, 2, '.', '')
+                );
+                $tipo22 = $gnre->createAttribute('tipo');
+                $tipo22->value = '22';
+                $valor22->appendChild($tipo22);
+            }
+
+            if (!empty($gnreGuia->fineValueFP)) {
+                $valor32 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->fineValueFP, 2, '.', '')
+                );
+                $tipo32 = $gnre->createAttribute('tipo');
+                $tipo32->value = '32';
+                $valor32->appendChild($tipo32);
+            }
+
+            if (!empty($gnreGuia->feesValueFP)) {
+                $valor42 = $gnre->createElement(
+                    'valor', number_format($gnreGuia->feesValueFP, 2, '.', '')
+                );
+                $tipo42 = $gnre->createAttribute('tipo');
+                $tipo42->value = '42';
+                $valor42->appendChild($tipo42);
+            }
+
+            if (!empty($gnreGuia->restatementValueFP)) {
+                $valor52 = $gnre->createElement('valor', number_format($gnreGuia->restatementValueFP, 2, '.', '')
+                );
+                $tipo52 = $gnre->createAttribute('tipo');
+                $tipo52->value = '52';
+                $valor52->appendChild($tipo52);
+            }
 
             $contribuinteDestinatario = $gnre->createElement('contribuinteDestinatario');
             $identificacao = $gnre->createElement('identificacao');
@@ -171,7 +247,7 @@ class LoteV2 extends Lote {
                 $destinatarioContribuinteDocumento = $gnre->createElement('CPF', $gnreGuia->c35_idContribuinteDestinatario);
             }
             $identificacao->appendChild($destinatarioContribuinteDocumento);
-            if ($gnreGuia->c36_inscricaoEstadualDestinatario!='') {
+            if ($gnreGuia->c36_inscricaoEstadualDestinatario != '') {
                 $IE = $gnre->createElement('IE', $gnreGuia->c36_inscricaoEstadualDestinatario);
                 $identificacao->appendChild($IE);
             }
@@ -181,14 +257,42 @@ class LoteV2 extends Lote {
             $contribuinteDestinatario->appendChild($razaoSocial);
             $contribuinteDestinatario->appendChild($municipio);
 
-
-
             $item->appendChild($receita);
             $item->appendChild($documentoOrigem);
             $item->appendChild($referencia);
             $item->appendChild($dataVencimento);
-            $item->appendChild($valor11);
-            $item->appendChild($valor21);
+
+            if (!empty($valor11)) {
+                $item->appendChild($valor11);
+            }
+            if (!empty($valor21)) {
+                $item->appendChild($valor21);
+            }
+            if (!empty($valor31)) {
+                $item->appendChild($valor31);
+            }
+            if (!empty($valor41)) {
+                $item->appendChild($valor41);
+            }
+            if (!empty($valor51)) {
+                $item->appendChild($valor51);
+            }
+            if (!empty($valor12)) {
+                $item->appendChild($valor12);
+            }
+            if (!empty($valor22)) {
+                $item->appendChild($valor22);
+            }
+            if (!empty($valor32)) {
+                $item->appendChild($valor32);
+            }
+            if (!empty($valor42)) {
+                $item->appendChild($valor42);
+            }
+            if (!empty($valor52)) {
+                $item->appendChild($valor52);
+            }
+
             $item->appendChild($contribuinteDestinatario);
 
             $camposExtras = $this->gerarCamposExtras($gnre, $gnreGuia);
@@ -198,7 +302,6 @@ class LoteV2 extends Lote {
 
             $itensGNRE->appendChild($item);
 
-
             $dados->appendChild($ufFavorecida);
             $dados->appendChild($tipoGnre);
             $dados->appendChild($contribuinteEmitente);
@@ -206,9 +309,6 @@ class LoteV2 extends Lote {
             $dados->appendChild($valorGNRE);
             $dados->appendChild($dataPagamento);
             $dados->appendChild($identificadorGuia);
-
-
-
 
             $guia->appendChild($dados);
             $gnre->appendChild($loteGnre);
@@ -231,6 +331,7 @@ class LoteV2 extends Lote {
                 $campoExtra->appendChild($valor);
                 $c39_camposExtras->appendChild($campoExtra);
             }
+
             return $c39_camposExtras;
         }
     }
@@ -238,68 +339,178 @@ class LoteV2 extends Lote {
     public function getCodigoDoc($uf, $difa = false) {
         $doc = '10';
         switch ($uf) {
-            case 'AC' : $doc = '10'; break;//acre
-            case 'AL' : $doc = '10'; break;//alagoas
-            case 'AP' : $doc = '10'; break;//amapa
-            case 'AM' : $doc = '22'; break;//amazon
-            case 'BA' : $doc = '10'; break;
-            case 'CE' : $doc = '10'; break;
-            case 'DF' : $doc = '10'; break;
-            case 'ES' : $doc = '10'; break;
-            case 'GO' : $doc = '10'; break;
-            case 'MA' : $doc = '10'; break;//maranhao
-            case 'MT' : $doc = '10'; break;//mato grosso
-            case 'MS' : $doc = '10'; break;//matro grosso sol
-            case 'MG' : $doc = '10'; break;
-            case 'PA' : $doc = '10'; break;//para
-            case 'PB' : $doc = '10'; break;//paraiba
-            case 'PR' : $doc = '10'; break;
-            case 'PE' : $doc = $difa?'24':'22'; break;//pernan
-            case 'PI' : $doc = '10'; break;//piaiu
-            case 'RJ' : $doc = '24'; break;
-            case 'RN' : $doc = '10'; break;
-            case 'RS' : $doc = '22'; break;
-            case 'RO' : $doc = '10'; break;//Rondonia
-            case 'RR' : $doc = '10'; break;//Roraima
-            case 'SC' : $doc = '24'; break;
-            case 'SP' : $doc = '10'; break;
-            case 'SE' : $doc = '10'; break;
-            case 'TO' : $doc = '10'; break;
+            case 'AC' :
+                $doc = '10';
+                break;//acre
+            case 'AL' :
+                $doc = '10';
+                break;//alagoas
+            case 'AP' :
+                $doc = '10';
+                break;//amapa
+            case 'AM' :
+                $doc = '22';
+                break;//amazon
+            case 'BA' :
+                $doc = '10';
+                break;
+            case 'CE' :
+                $doc = '10';
+                break;
+            case 'DF' :
+                $doc = '10';
+                break;
+            case 'ES' :
+                $doc = '10';
+                break;
+            case 'GO' :
+                $doc = '10';
+                break;
+            case 'MA' :
+                $doc = '10';
+                break;//maranhao
+            case 'MT' :
+                $doc = '10';
+                break;//mato grosso
+            case 'MS' :
+                $doc = '10';
+                break;//matro grosso sol
+            case 'MG' :
+                $doc = '10';
+                break;
+            case 'PA' :
+                $doc = '10';
+                break;//para
+            case 'PB' :
+                $doc = '10';
+                break;//paraiba
+            case 'PR' :
+                $doc = '10';
+                break;
+            case 'PE' :
+                $doc = $difa ? '24' : '22';
+                break;//pernan
+            case 'PI' :
+                $doc = '10';
+                break;//piaiu
+            case 'RJ' :
+                $doc = '24';
+                break;
+            case 'RN' :
+                $doc = '10';
+                break;
+            case 'RS' :
+                $doc = '22';
+                break;
+            case 'RO' :
+                $doc = '10';
+                break;//Rondonia
+            case 'RR' :
+                $doc = '10';
+                break;//Roraima
+            case 'SC' :
+                $doc = '24';
+                break;
+            case 'SP' :
+                $doc = '10';
+                break;
+            case 'SE' :
+                $doc = '10';
+                break;
+            case 'TO' :
+                $doc = '10';
+                break;
         }
+
         return $doc;
     }
 
     public function getNumDoc($uf) {
         $doc = 'numero';
         switch ($uf) {
-            case 'AC' : $doc = 'numero'; break;//acre
-            case 'AL' : $doc = 'numero'; break;//alagoas
-            case 'AP' : $doc = 'numero'; break;//amapa
-            case 'AM' : $doc = 'chave'; break;//amazon
-            case 'BA' : $doc = 'numero'; break;
-            case 'CE' : $doc = 'numero'; break;
-            case 'DF' : $doc = 'numero'; break;
-            case 'ES' : $doc = 'numero'; break;
-            case 'GO' : $doc = 'numero'; break;
-            case 'MA' : $doc = 'numero'; break;//maranhao
-            case 'MT' : $doc = 'numero'; break;//mato grosso
-            case 'MS' : $doc = 'numero'; break;//matro grosso sol
-            case 'MG' : $doc = 'numero'; break;
-            case 'PA' : $doc = 'numero'; break;//para
-            case 'PB' : $doc = 'numero'; break;//paraiba
-            case 'PR' : $doc = 'numero'; break;
-            case 'PE' : $doc = 'chave'; break;//pernan
-            case 'PI' : $doc = 'numero'; break;//piaiu
-            case 'RJ' : $doc = 'chave'; break;
-            case 'RN' : $doc = 'numero'; break;
-            case 'RS' : $doc = 'chave'; break;
-            case 'RO' : $doc = 'numero'; break;//Rondonia
-            case 'RR' : $doc = 'numero'; break;//Roraima
-            case 'SC' : $doc = 'chave'; break;
-            case 'SP' : $doc = 'numero'; break;
-            case 'SE' : $doc = 'numero'; break;
-            case 'TO' : $doc = 'numero'; break;
+            case 'AC' :
+                $doc = 'numero';
+                break;//acre
+            case 'AL' :
+                $doc = 'numero';
+                break;//alagoas
+            case 'AP' :
+                $doc = 'numero';
+                break;//amapa
+            case 'AM' :
+                $doc = 'chave';
+                break;//amazon
+            case 'BA' :
+                $doc = 'numero';
+                break;
+            case 'CE' :
+                $doc = 'numero';
+                break;
+            case 'DF' :
+                $doc = 'numero';
+                break;
+            case 'ES' :
+                $doc = 'numero';
+                break;
+            case 'GO' :
+                $doc = 'numero';
+                break;
+            case 'MA' :
+                $doc = 'numero';
+                break;//maranhao
+            case 'MT' :
+                $doc = 'numero';
+                break;//mato grosso
+            case 'MS' :
+                $doc = 'numero';
+                break;//matro grosso sol
+            case 'MG' :
+                $doc = 'numero';
+                break;
+            case 'PA' :
+                $doc = 'numero';
+                break;//para
+            case 'PB' :
+                $doc = 'numero';
+                break;//paraiba
+            case 'PR' :
+                $doc = 'numero';
+                break;
+            case 'PE' :
+                $doc = 'chave';
+                break;//pernan
+            case 'PI' :
+                $doc = 'numero';
+                break;//piaiu
+            case 'RJ' :
+                $doc = 'chave';
+                break;
+            case 'RN' :
+                $doc = 'numero';
+                break;
+            case 'RS' :
+                $doc = 'chave';
+                break;
+            case 'RO' :
+                $doc = 'numero';
+                break;//Rondonia
+            case 'RR' :
+                $doc = 'numero';
+                break;//Roraima
+            case 'SC' :
+                $doc = 'chave';
+                break;
+            case 'SP' :
+                $doc = 'numero';
+                break;
+            case 'SE' :
+                $doc = 'numero';
+                break;
+            case 'TO' :
+                $doc = 'numero';
+                break;
         }
+
         return $doc;
     }
 

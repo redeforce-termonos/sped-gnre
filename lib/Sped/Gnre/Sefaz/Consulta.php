@@ -75,9 +75,11 @@ class Consulta extends ConsultaGnre
 
         $ambiente = $gnre->createElement('ambiente', $this->getEnvironment());
         $numeroRecibo = $gnre->createElement('numeroRecibo', $this->getRecibo());
+        $generatePDF = $gnre->createElement('incluirPDFGuias', 'S');
 
         $consulta->appendChild($ambiente);
         $consulta->appendChild($numeroRecibo);
+        $consulta->appendChild($generatePDF);
 
         $this->getSoapEnvelop($gnre, $consulta);
 
@@ -96,7 +98,7 @@ class Consulta extends ConsultaGnre
 
         $gnreCabecalhoSoap = $gnre->createElement('gnreCabecMsg');
         $gnreCabecalhoSoap->setAttribute('xmlns', 'http://www.gnre.pe.gov.br/wsdl/consultar');
-        $gnreCabecalhoSoap->appendChild($gnre->createElement('versaoDados', '1.00'));
+        $gnreCabecalhoSoap->appendChild($gnre->createElement('versaoDados', '2.00'));
 
         $soapHeader = $gnre->createElement('soap12:Header');
         $soapHeader->appendChild($gnreCabecalhoSoap);
@@ -104,9 +106,7 @@ class Consulta extends ConsultaGnre
         $soapEnv->appendChild($soapHeader);
         $gnre->appendChild($soapEnv);
 
-        $action = $this->ambienteDeTeste ?
-            'http://www.testegnre.pe.gov.br/webservice/GnreResultadoLote' :
-            'http://www.gnre.pe.gov.br/webservice/GnreResultadoLote';
+        $action = 'http://www.gnre.pe.gov.br/webservice/GnreResultadoLote';
 
         $gnreDadosMsg = $gnre->createElement('gnreDadosMsg');
         $gnreDadosMsg->setAttribute('xmlns', $action);
