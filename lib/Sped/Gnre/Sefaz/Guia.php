@@ -37,12 +37,15 @@ use Sped\Gnre\Exception\UndefinedProperty;
 class Guia
 {
 
+    public const TYPE_LEGAL = 1;
+    public const TYPE_NATURAL = 2;
+
     /**
      * Uma sigla representando um dos 27 estados brasileiros
      * por exemplo AC, BA, DF
      * @var    string
      */
-    private $c01_UfFavorecida;
+    public $c01_UfFavorecida;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -50,7 +53,7 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c02_receita;
+    public $c02_receita;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -58,7 +61,7 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c25_detalhamentoReceita;
+    public $c25_detalhamentoReceita;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -66,7 +69,7 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c26_produto;
+    public $c26_produto;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -74,14 +77,14 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c27_tipoIdentificacaoEmitente;
+    public $c27_tipoIdentificacaoEmitente;
 
     /**
      * Informar o CPF ou CNPJ sem nenhuma formatação
      * apenas os dígitos
      * @var    int
      */
-    private $c03_idContribuinteEmitente;
+    public $c03_idContribuinteEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -89,7 +92,7 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c28_tipoDocOrigem;
+    public $c28_tipoDocOrigem;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -97,14 +100,14 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c04_docOrigem;
+    public $c04_docOrigem;
 
     /**
      * Para esse atributo é esperado um dado do tipo double com
      * o valor total da guia sem juros e/ou acréscimos
      * @var    double
      */
-    private $c06_valorPrincipal;
+    public $c06_valorPrincipal;
 
     /**
      * Para esse atributo é esperado um dado do tipo double com
@@ -113,14 +116,14 @@ class Guia
      * por exemplo for 5.00 o valor total será 10.00
      * @var    double
      */
-    private $c10_valorTotal;
+    public $c10_valorTotal;
 
     /**
      * Para esse atributo é esperado um dado do tipo string com
      * a data de vencimento da guia no formato AAAA-MM-DD
      * @var    string
      */
-    private $c14_dataVencimento;
+    public $c14_dataVencimento;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -128,28 +131,28 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c15_convenio;
+    public $c15_convenio;
 
     /**
      * Para esse atributo é esperado um dado do tipo string com
      * a razão social da empresa emitente
      * @var    int
      */
-    private $c16_razaoSocialEmitente;
+    public $c16_razaoSocialEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo int com
      * a inscrição estadual (I.E) da empresa emitente
      * @var    int
      */
-    private $c17_inscricaoEstadualEmitente;
+    public $c17_inscricaoEstadualEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo string com
      * o endereço  da empresa emitente
      * @var    int
      */
-    private $c18_enderecoEmitente;
+    public $c18_enderecoEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -157,28 +160,28 @@ class Guia
      * primeiros digitos
      * @var    int
      */
-    private $c19_municipioEmitente;
+    public $c19_municipioEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo string
      * com a singla do estado da empresa emitente por exemplo SP, TO, AC
      * @var    string
      */
-    private $c20_ufEnderecoEmitente;
+    public $c20_ufEnderecoEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo int
      * com o CEP correspondente da empresa emitente
      * @var    int
      */
-    private $c21_cepEmitente;
+    public $c21_cepEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo int
      * com o telefone do emitente no formato DD99999999
      * @var    int
      */
-    private $c22_telefoneEmitente;
+    public $c22_telefoneEmitente;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -186,28 +189,28 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    int
      */
-    private $c34_tipoIdentificacaoDestinatario;
+    public $c34_tipoIdentificacaoDestinatario;
 
     /**
      * Informar o CPF ou CNPJ sem nenhuma formatação
      * apenas os dígitos
      * @var    int
      */
-    private $c35_idContribuinteDestinatario;
+    public $c35_idContribuinteDestinatario;
 
     /**
      * Para esse atributo é esperado um dado do tipo int com
      * a inscrição estadual (I.E) da empresa a quem se destina a guia
      * @var    int
      */
-    private $c36_inscricaoEstadualDestinatario;
+    public $c36_inscricaoEstadualDestinatario;
 
     /**
      * Para esse atributo é esperado um dado do tipo string com
      * a razão social da empresa a quem se destina a guia
      * @var    int
      */
-    private $c37_razaoSocialDestinatario;
+    public $c37_razaoSocialDestinatario;
 
     /**
      * Para esse atributo é esperado um dado do tipo inteiro
@@ -215,21 +218,21 @@ class Guia
      * primeiros digitos
      * @var    int
      */
-    private $c38_municipioDestinatario;
+    public $c38_municipioDestinatario;
 
     /**
      * Para esse atributo é esperado um dado do tipo string com
      * a data de pagamento da guia no formato AAAA-MM-DD
      * @var    string
      */
-    private $c33_dataPagamento;
+    public $c33_dataPagamento;
 
     /**
      * Para esse atributo é esperado um dado do tipo int
      * com o intervalo entre 0 e 5 (1, 2, 3, 4 ou 5)
      * @var    int
      */
-    private $periodo;
+    public $periodo;
 
     /**
      * Para esse atributo é esperado um dado do tipo int
@@ -237,21 +240,21 @@ class Guia
      * desejado esteja entre 1 e 9)
      * @var    int
      */
-    private $mes;
+    public $mes;
 
     /**
      * Para esse atributo é esperado um dado do tipo int com
      * algum ano válido como por exemplo 2014 (IMPORTANTE: o ano dever ser menor ou igual a 2000)
      * @var    int
      */
-    private $ano;
+    public $ano;
 
     /**
      * Para esse atributo é esperado um dado do tipo int com
      * o número de parcelas desejadas entre 1 e 999 ( 1, 2, 3, 4 ... 999)
      * @var    int
      */
-    private $parcela;
+    public $parcela;
 
     /**
      * Para esse atributo é esperado um dado do tipo array
@@ -259,7 +262,7 @@ class Guia
      * codigo, tipo e valor
      * @var    array
      */
-    private $c39_camposExtras;
+    public $c39_camposExtras;
 
     /**
      * Para esse atributo é esperado um dado do tipo string
@@ -267,14 +270,14 @@ class Guia
      * http://www.gnre.pe.gov.br/gnre/index.html
      * @var    string
      */
-    private $c42_identificadorGuia;
+    public $c42_identificadorGuia;
 
     /**
      * Dados retornados pelo web service da SEFAZ
      * com os dados complementares da guia
      * @var string
      */
-    private $retornoInformacoesComplementares;
+    public $retornoInformacoesComplementares;
 
     /**
      * Dados retornados pelo web service da SEFAZ
@@ -284,7 +287,7 @@ class Guia
      * na sétima linha
      * @var double
      */
-    private $retornoAtualizacaoMonetaria;
+    public $retornoAtualizacaoMonetaria;
 
     /**
      * Dados retornados pelo web service da SEFAZ
@@ -294,7 +297,7 @@ class Guia
      * na oitava linha
      * @var double
      */
-    private $retornoJuros;
+    public $retornoJuros;
 
     /**
      * Dados retornados pelo web service da SEFAZ
@@ -304,14 +307,14 @@ class Guia
      * na nona linha
      * @var double
      */
-    private $retornoMulta;
+    public $retornoMulta;
 
     /**
      * Dados retornados pelo web service da SEFAZ com a linha
      * digitável do código de barras possuindo 48 caracteres
      * @var int
      */
-    private $retornoRepresentacaoNumerica;
+    public $retornoRepresentacaoNumerica;
 
     /**
      * Dados retornados pelo web service da SEFAZ com o código
@@ -319,7 +322,7 @@ class Guia
      * para gerar a imagem do  código de barras do boleto).
      * @var int
      */
-    private $retornoCodigoDeBarras;
+    public $retornoCodigoDeBarras;
 
     /**
      * Dados retornados pelo web service da SEFAZ com a situação
@@ -328,7 +331,7 @@ class Guia
      * a documentação de retorno em http://www.gnre.pe.gov.br/gnre/portal/downloads.jsp
      * @var int
      */
-    private $retornoSituacaoGuia;
+    public $retornoSituacaoGuia;
 
     /**
      * Dados retornados pelo web service da SEFAZ com o numero de sequencia
@@ -337,35 +340,35 @@ class Guia
      * a documentação de retorno em http://www.gnre.pe.gov.br/gnre/portal/downloads.jsp
      * @var type
      */
-    private $retornoSequencialGuia;
+    public $retornoSequencialGuia;
 
     /**
      * Dados retornados pelo web service da SEFAZ com o nome dos campos do XML
      * que causaram o erro caso a guia não tenha sido processada com sucesso
      * @var string
      */
-    private $retornoErrosDeValidacaoCampo;
+    public $retornoErrosDeValidacaoCampo;
 
     /**
      * Dados retornados pelo web service da SEFAZ com o código
      * do erro caso a guia não tenha sido processada com sucesso
      * @var string
      */
-    private $retornoErrosDeValidacaoCodigo;
+    public $retornoErrosDeValidacaoCodigo;
 
     /**
      * Dados retornados pelo web service da SEFAZ com a descrição
      * do erro caso a guia não tenha sido processada com sucesso
      * @var string
      */
-    private $retornoErrosDeValidacaoDescricao;
+    public $retornoErrosDeValidacaoDescricao;
 
     /**
      * Dados retornados pelo web service da SEFAZ com o número
      * de controle da guia, <b>o valor desse atributo é gerado pela SEFAZ</b>
      * @var int
      */
-    private $retornoNumeroDeControle;
+    public $retornoNumeroDeControle;
 
     /**
      * Método mágico utilizado para retornar um valor de um
@@ -388,7 +391,7 @@ class Guia
      * @param  string $property  O nome existente de um atributo existente na classe
      * @param  mixed  $value  O valor desejado para ser setado no atributo desejado
      * @throws UndefinedProperty  Caso o atributo desejada não exista
-     * @return boolean Retorna true caso seja setado o valor para o atributo desejado
+     * @return bool Retorna true caso seja setado o valor para o atributo desejado
      * @since  1.0.0
      */
     public function __set($property, $value)
@@ -403,11 +406,11 @@ class Guia
      * Método utilizado para verificar se o atributo desejado
      * exista na classe
      * @param  string $property  O nome existente de um atributo existente na classe
-     * @return boolean  Retorna true caso o atributo desejado exista na classe
+     * @return bool  Retorna true caso o atributo desejado exista na classe
      * @throws UndefinedProperty  Caso o atributo desejada não exista na classe
      * @since  1.0.0
      */
-    private function verifyProperty($property)
+    public function verifyProperty($property)
     {
         if (!property_exists($this, $property)) {
             throw new UndefinedProperty($property);

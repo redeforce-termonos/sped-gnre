@@ -35,6 +35,6 @@ class UnreachableFile extends \Exception
      */
     public function __construct($file)
     {
-        parent::__construct('Não foi possível encontrar o arquivo ' . $file, null, null);
+        parent::__construct('Não foi possível encontrar o arquivo ' . $file, 500, null);
     }
 }
