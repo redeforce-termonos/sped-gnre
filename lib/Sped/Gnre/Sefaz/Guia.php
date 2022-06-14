@@ -479,10 +479,18 @@ class Guia {
     public float $restatementValueFP;
 
     public function sumICMSValue(): float {
+        if(isset($this->totalValueICMS)) {
+            return $this->totalValueICMS;
+        }
+
         return ($this->mainValueICMS + $this->fineValueICMS + $this->feesValueICMS + $this->restatementValueICMS);
     }
 
     public function sumFPValue(): float {
+        if(isset($this->totalValueFP)) {
+            return $this->totalValueFP;
+        }
+
         return ($this->mainValueFP + $this->fineValueFP + $this->feesValueFP + $this->restatementValueFP);
     }
 

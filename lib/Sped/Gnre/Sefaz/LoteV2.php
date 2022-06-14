@@ -129,10 +129,14 @@ class LoteV2 extends Lote {
             $item = $gnre->createElement('item');
 
             $receita = $gnre->createElement('receita', $gnreGuia->c02_receita);
-            $documentoOrigem = $gnre->createElement('documentoOrigem', $gnreGuia->c04_docOrigem);
-            $tipoDoc = $gnre->createAttribute('tipo');
-            $tipoDoc->value = $gnreGuia->c28_tipoDocOrigem;
-            $documentoOrigem->appendChild($tipoDoc);
+
+            if (!empty($gnreGuia->c04_docOrigem)) {
+                $documentoOrigem = $gnre->createElement('documentoOrigem', $gnreGuia->c04_docOrigem);
+                $tipoDoc = $gnre->createAttribute('tipo');
+                $tipoDoc->value = $gnreGuia->c28_tipoDocOrigem;
+                $documentoOrigem->appendChild($tipoDoc);
+            }
+
             $referencia = $gnre->createElement('referencia');
             $periodo = $gnre->createElement('periodo', '0');
             $referencia->appendChild($periodo);
@@ -258,7 +262,9 @@ class LoteV2 extends Lote {
             $contribuinteDestinatario->appendChild($municipio);
 
             $item->appendChild($receita);
-            $item->appendChild($documentoOrigem);
+            if (isset($documentoOrigem)) {
+                $item->appendChild($documentoOrigem);
+            }
             $item->appendChild($referencia);
             $item->appendChild($dataVencimento);
 
